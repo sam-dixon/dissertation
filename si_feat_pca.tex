@@ -32,14 +32,14 @@ Additionally, this analysis focuses solely on the relative sizes and shapes of t
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/spline_norm_ex.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/spline_norm_ex.pdf}
     \caption{An example of the preprocessing steps taken to normalize the spectra using a 13-point spline. The upper figure shows the full near-max spectrum along with the best fit spline. The lower figure shows that same spectrum with the spline pseudo-continuum removed.}
     \label{spline_norm_ex}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/compare_spline_norm.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/compare_spline_norm.pdf}
     \caption{Zoom-in on the feature of interest for this work, with and without the spline normalization. The features plotted in the right figure are colored by the objects' SALT2 color to emphasize that the effect of this spline normalization is to remove the effects of color on the shape of the spectral feature.}
     \label{compare_spline_norm}
 \end{figure}
@@ -87,14 +87,14 @@ Using this smoothed spectrum, we search for the wavelength of maximal absorption
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/example_measure.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/example_measure.pdf}
     \caption{An example \siliconii\; feature. The original data is shown in blue along with the uncertainties. The optimal smoothing is shown in the thick black line. The blue and red spans show the location of the wavelength windows used to search for the maxima defining the pseudo-continuum (the maxima are the large black points). The pseudo-continuum is plotted as the dashed black line. The location of the maximum absorption wavelength is also shown as a large black point.}
     \label{smooth_example}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/spectral_features_training_scatter_hist.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/spectral_features_training_scatter_hist.pdf}
     \caption{Distributions of the spectral indicators of the \siliconii\; feature from the training set.}
     \label{indicator_scatter_hist}
 \end{figure}
@@ -108,7 +108,7 @@ One way to work around the limitations of low resolution spectroscopy would be t
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/gauss_bias.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/gauss_bias.pdf}
     \caption{Histogram of residuals between the velocity of the \siliconii\; line measured using a Gaussian line profile and the true velocity. There is a clear bias, with the Gaussian measurement giving values that are on average 200 km/s higher than the true values.}
     \label{gauss_bias}
 \end{figure}
@@ -140,7 +140,7 @@ The EMFA components are shown in Fig. \ref{emfa_components}. Each figure shows t
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/model_components.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/model_components.pdf}
     \caption{Visualization of the components ($\bm{x}$) of the EMFA model. Each subfigure shows the effect of adding various values of multiples of the components to the mean vector.}
     \label{emfa_components}
 \end{figure}
@@ -149,21 +149,21 @@ The distributions of the loading coefficients are shown in Fig. \ref{corner_plot
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/corner_plot_vel.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/corner_plot_vel.pdf}
     \caption{Corner plot showing the marginal distributions of the loading coefficients for the training set, colored by the measured velocity of the \siliconii\; feature. Each point in the scatter plot represents one supernova.}
     \label{corner_plot_vel}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/corner_plot_ew.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/corner_plot_ew.pdf}
     \caption{Same as Fig. \ref{corner_plot_vel}, but colored by the pseudo-equivalent width.}
     \label{corner_plot_ew}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/coef_vs_vel_and_ew.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/coef_vs_vel_and_ew.pdf}
     \caption{Scatter plots of the loading coefficients of the training data with their measured spectral indicators. We can see that each of the components is correlated with the velocity. Only the first two components are correlated with the pseudo-equivalent width.}
     \label{scatter_loading}
 \end{figure}
@@ -185,14 +185,14 @@ Some examples of the feature recovery at native resolution are shown in Fig. \re
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/example_reconstruction.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/example_reconstruction.pdf}
     \caption{A random selection of recovered spectral features at the native resolution of the SNfactory spectra. The gray lines show the observed data, the blue line shows the data smoothed by the optimal Savitzky-Golay filter, and the orange line is the reconstructed flux.}
     \label{feature_recovery}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/snf_recovery_resids.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/snf_recovery_resids.pdf}
     \caption{Histograms of the residuals between the velocities and equivalent widths measured from the flux reconstructed using the EMFA model and the original observed flux in the training data.}
     \label{snf_hist_resids_native_resolution}
 \end{figure}
@@ -202,7 +202,7 @@ We need to ensure that this model is over-trained and can generalize to other da
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/bsnip_recovery_resids.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/bsnip_recovery_resids.pdf}
     \caption{Histograms of the residuals between the velocities and equivalent widths measured from the flux reconstructed using the EMFA model and the original observed flux in the validation set. The outlier SN2005M has been removed from these plots (see Section \ref{outliers})}
     \label{bsnip_hist_resids}
 \end{figure}
@@ -213,7 +213,7 @@ There are a few failed reconstructions. We show them in Fig. \ref{valid_failures
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=\textwidth]{figures/fit_failures.pdf}
+    \includegraphics[width=\textwidth]{figures/si_feat_pca/fit_failures.pdf}
     \caption{Validation spectra where the EMFA fit and/or pseudo-continuum determination failed. The left frame is SN2007 gi, an exremely rapidly expanding object. The middle frame is SN2005M, which may be 1991T-like. The right frame shows an example of an object for which the pseudo-continuum determination failed due to underestimated variance in the spectrum. In each subfigure, the gray line represents the SG smoothed flux, and the blue line shows the best-fit EMFA flux. In the right figure, we also show the pseudo-continuum as a dashed black line.}
     \label{valid_failures}
 \end{figure}
@@ -233,7 +233,7 @@ The full details of the prism simulation we use in this section can be found in 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_snr_vs_redshift.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_snr_vs_redshift.pdf}
     \caption{Average signal-to-noise ratio for assumed for prism spectra used in the simulations. We report the average from 5600-6600 \angstrom\; in the rest frame since this the wavelength region of interest.}
     \label{snr_wfirst_prism}
 \end{figure}
@@ -242,7 +242,7 @@ The simulated data set is generated as follows. For each object in the training 
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_example_spectra.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_example_spectra.pdf}
     \caption{Example realizations of the training set near-max spectra observed with the WFIRST prism spectrograph with a one hour exposure time.}
     \label{wfirst_example_spectra}
 \end{figure}
@@ -254,7 +254,7 @@ For every spectrum generated, we measured the velocity and pseudo-equivalent wid
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/example_wfirst_emfa_recovery.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/example_wfirst_emfa_recovery.pdf}
     \caption{Example of the various methods tested to recover the spectral indicators from the low resolution, noisy spectra from the WFIRST prism. The original training set spectrum that was resampled and noised is shown in gray. The realization of the prism observation (with uncertainties) is shown as the black data points. The best-fit EMFA spectral feature is shown in blue, the smoothed version of the observed flux is shown in orange, and the best-fit Gaussian line profile is shown in green.}
     \label{example_wfirst_recovery}
 \end{figure}
@@ -263,14 +263,14 @@ First, we examine how the error in the measurements changes with redshift, where
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_vel_err.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_vel_err.pdf}
     \caption{Per-redshift-bin average of the absolute value of differences between measured velocities and true velocities as a function of redshift. At low redshifts, the SG filtering method captures the true value best, but as noise increases, the EMFA method outperforms all other methods.}
     \label{wfirst_vel_err_vs_z}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_pew_err.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_pew_err.pdf}
     \caption{Same as Fig. \ref{wfirst_vel_err_vs_z}, but for pseudo-equivalent width measurements. At low redshifts, all methods give comparable errors, but as the noise increases, the EMFA method is the preferred technique.}
     \label{wfirst_ew_err_vs_z}
 \end{figure}
@@ -279,14 +279,14 @@ We also examine how the uncertainty in each of these measurements changes with t
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_vel_uncert.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_vel_uncert.pdf}
     \caption{Per-redshift-bin average of the per-object standard deviations of the velocity measured with three techniques plotted as a function of redshift. The EMFA recovery technique outperforms both the Gaussian and SG filter smoothing techniques at all redshifts.}
     \label{wfirst_vel_uncertainty_vs_z}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/wfirst_pew_uncert.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/si_feat_pca/wfirst_pew_uncert.pdf}
     \caption{Same as Fig. \ref{wfirst_vel_uncertainty_vs_z}, but for pseudo-equivalent width measurements. In contrast to the velocity measurement uncertainty, the SG filter smoothing methods seems to perform better than the Gaussian measurement in this metric. However, the EMFA still out-performs the both methods.}
     \label{wfirst_ew_uncertainty_vs_z}
 \end{figure}
