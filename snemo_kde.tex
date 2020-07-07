@@ -69,7 +69,7 @@ Let's first consider the one-dimensional case. Fig. \ref{fig:1d_hist} shows a hi
 
 \begin{figure}
     \centering
-    \includegraphics{figures/1d_hist_example.pdf}
+    \includegraphics{figures/snemo_kde/1d_hist_example.pdf}
     \caption{Example of a kernel density estimate of a 1-dimensional, non-Gaussian distribution. The ticks represent the $n=250$ observations drawn from the true distribution shown with the black dashed line. The blue, orange, and green lines represent KDEs with increasing bandwidth sizes.}
     \label{fig:1d_hist}
 \end{figure}
@@ -87,7 +87,7 @@ Using these techniques on our toy example from above, we find an optimal bandwid
 
 \begin{figure}
     \centering
-    \includegraphics{figures/1d_bandwidth_example.pdf}
+    \includegraphics{figures/snemo_kde/1d_bandwidth_example.pdf}
     \caption{Results from 5-fold cross-validation for the example distribution and data shown in Fig. \ref{fig:1d_hist}. The blue line and shading show the mean and standard deviation of the normalized scores from all of the cross-validation subsets. The vertical blue line shows the location of the maximum score. The dashed black line shows the location of the Silverman's rule-of-thumb estimate for the optimal bandwidth.}
     \label{fig:1d_bandwidth_opt}
 \end{figure}
@@ -102,7 +102,7 @@ This example joint distribution is correlated and nonlinear, and as such works a
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/2d_scatter_no_scaling.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/2d_scatter_no_scaling.pdf}
     \caption{Example kernel density estimates in 2 dimensions for a joint probability distribution that is correlated and non-Gaussian. The $n=250$ data points are shown as black dots. The black contour lines show the true 1, 2, and 3 $\sigma$ contours, while the fading shades of blue show the 1, 2, and 3 $\sigma$ estimates of the KDE. In each of these examples, we assume a Gaussian kernel with no covariance terms.}
     \label{fig:2d_scatter_unscaled}
 \end{figure}
@@ -115,14 +115,14 @@ A commonly used whitening matrix is $W = \Lambda^{-1/2}U^\top$, where $\Lambda$ 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/2d_rescaling_process.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/2d_rescaling_process.pdf}
     \caption{The process of transforming the data to use a kernel that captures the data covariance. The first panel shows the data in the original coordinates. The second panel shows the data after being transformed by the whitening transformation. The third panel shows the KDE fit with a normal Gaussian kernel, and the final panel shows the data and the KDE reprojected back into the original coordinates. In each panel, the same data points are shown as black dots. The true 1, 2, and 3 $\sigma$ contours are shown in differing shades of blue. The black lines indicate the 1, 2, and 3 $\sigma$ confidence intervals of the best-fit KDE.}
     \label{fig:2d_rescaling_process}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/2d_scatter.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/2d_scatter.pdf}
     \caption{Comparison of the final KDE for our toy example using a) the best-fit Gaussian kernel with no covariance transformation and b) the best-fit Gaussian kernel with whitening applied. In both panels, the blue shading indicates the 1, 2, and 3 $\sigma$ contours of the true toy model distribution, and the black lines indicate similar contours for the kernel density estimates of the distribution.}
     \label{fig:2d_scatter_scaled}
 \end{figure}
@@ -134,28 +134,28 @@ We apply the multidimensional KDE fitting process laid out in the previous secti
 
 \begin{figure}
     \centering
-\includegraphics[width=0.9\textwidth]{figures/salt2_corner.pdf}
+\includegraphics[width=0.9\textwidth]{figures/snemo_kde/salt2_corner.pdf}
     \caption{Corner plot showing the joint and marginal parameter distributions of the SALT2 parameters for the SNfactory data set (in blue), as well as the distribution of samples drawn from the KDE trained on these data (in red).}
     \label{fig:salt2_sample}
 \end{figure}
 
 \begin{figure}
     \centering
-\includegraphics[width=0.9\textwidth]{figures/snemo2_corner.pdf}
+\includegraphics[width=0.9\textwidth]{figures/snemo_kde/snemo2_corner.pdf}
     \caption{Same as Fig. \ref{fig:salt2_sample}, but for SNEMO2}
     \label{fig:snemo2_sample}
 \end{figure}
 
 \begin{figure}
     \centering
-\includegraphics[width=0.9\textwidth]{figures/snemo7_corner.pdf}
+\includegraphics[width=0.9\textwidth]{figures/snemo_kde/snemo7_corner.pdf}
     \caption{Same as Fig. \ref{fig:salt2_sample}, but for SNEMO7}
     \label{fig:snemo7_sample}
 \end{figure}
 
 \begin{figure}
     \centering
-\includegraphics[width=0.9\textwidth]{figures/snemo15_corner.pdf}
+\includegraphics[width=0.9\textwidth]{figures/snemo_kde/snemo15_corner.pdf}
     \caption{Same as Fig. \ref{fig:salt2_sample}, but for SNEMO15}
     \label{fig:snemo15_sample}
 \end{figure}
@@ -173,7 +173,7 @@ Calculating this distance in many dimensions is possible, but computationally di
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/cramer_distances_param_space.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/cramer_distances_param_space.pdf}
     \caption{Cram\'{e}r distances between the empirical marginal distributions functions of the data sample and samples from a multivariate Gaussian (blue) and samples from the KDE (orange) for each parameter in each of the spectral models studied.}
     \label{fig:distances}
 \end{figure}
@@ -184,7 +184,7 @@ It is important to note that the metric we are using uses only the information f
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/snemo15_nongaussian_example.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/snemo15_nongaussian_example.pdf}
     \caption{Comparison of the KDE estimate (blue filled contours representing the 68th, 95th, and 99th percentiles of samples drawn from the full 16-dimensional estimate) and multivariate Gaussian estimate (similarly spaced red line contours) of the joint probability distribution between SNEMO15 $A_s$ and $c_1$. While the Gaussian estimate shows a closer agreement in the marginal distribution of these parameters, according to the Cram\'{e}r distance (see Fig. \ref{fig:distances}), the KDE seems to allow a wider variety of values and better captures the skewness of this data because it is not constrained to match the Gaussian form.}
     \label{fig:snemo15_joint_example}
 \end{figure}
@@ -199,14 +199,14 @@ Once we have our grid of flux values $f(\lambda, p)$, we can then easily synthes
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/example_roman_spec.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/example_roman_spec.pdf}
     \caption{A series of synthesized spectral observations at a range of phases for a single object at redshift $z=0.775$ generated from a random draw from the SNEMO15 KDE. The resolution matches the proposed design of the Roman Space Telescope prism spectrograph, and the signal-to-noise ratio representing the level that could be obtained with an hour of exposure time.}
     \label{fig:example_prism_spec}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/example_roman_lc.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/example_roman_lc.pdf}
     \caption{Synthetic photometry of the same object shown in Fig. \ref{fig:example_prism_spec}, but observed photometrically in the Roman Wide Field Instrument bandpasses.}
     \label{fig:example_roman_lc}
 \end{figure}
@@ -248,7 +248,7 @@ Fig. \ref{fig:model_vSi_recovery} shows histograms of the residuals between thes
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/model_vSi_recovery.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/model_vSi_recovery.pdf}
     \caption{Histograms of the residuals between the velocity of the SiII6355 line as measured from the data and as measured from the spectrum generated with the best-fit spectral model parameters. Lower dimensional models (SALT2 and SNEMO2) }
     \label{fig:model_vSi_recovery}
 \end{figure}
@@ -257,7 +257,7 @@ This general trend is seen across all the spectral indicators studied, with the 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/model_spec_feat_recovery.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/model_spec_feat_recovery.pdf}
     \caption{Normalized median absolute deviation of residuals between spectral features measured from data spectra and from spectra generated from the best-fit spectral model. In general, spectral models with more parameters more closely capture the spectral feature measurements.}
     \label{fig:model_spec_feat_recovery}
 \end{figure}
@@ -269,14 +269,14 @@ The empirical cumulative distributions of the data and the KDE distributions for
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/ecdf_kde.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/ecdf_kde.pdf}
     \caption{Empirical cumulative distribution functions of each spectral indicator for the data set and samples from the kernel density estimate of the spectral model parameter spaces.}
     \label{fig:ecdf_kde}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/ecdf_gauss.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/ecdf_gauss.pdf}
     \caption{Same as Fig. \ref{fig:ecdf_kde}, but for samples from the multivariate Gaussian estimation of each of the spectral model parameter spaces.}
     \label{fig:ecdf_gauss}
 \end{figure}
@@ -285,7 +285,7 @@ We can quantify these differences by calculating the Cram\'{e}r distances betwee
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/cramer_distances_spec_feats.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/snemo_kde/cramer_distances_spec_feats.pdf}
     \caption{Cram\'{e}r distances between spectral indicator distributions for the SNfactory data and samples from the KDE estimates of the SALT2 and SNEMO parameter distributions, Gaussian estimates of the spectral model parameter distributions, and the modeled at-max spectra for the training data.}
     \label{fig:cramer_spec_feat}
 \end{figure}
