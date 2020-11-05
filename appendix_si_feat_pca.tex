@@ -1,0 +1,47 @@
+\chapter{Optimal Savitsky-Golay Smoothing Windows}
+\label{sg_optimal}
+We wish to find the optimal size of a Savitzky-Golay smoothing window to best estimate the true flux of a spectrum, which we call $\hat{Y}$. We call the observed, noisy spectrum $Y$, and the smoothed spectrum $Y'$. Our noisy spectrum can be written as
+\begin{equation}
+    Y = \hat{Y}+N
+\end{equation}
+where $N$ is a noise vector. An ideal smoothing algorithm will make $Y'$ as close to $\hat{Y}$ as possible, that is it should minimize 
+\begin{equation}
+    ||Y'-\hat{Y}|| \equiv (Y'-\hat{Y})^\dagger W (Y'-\hat{Y})
+\end{equation}
+where $W$ is a weight matrix given by the inverse of the covariance matrix of the observed noisy spectrum. We assume no covariance between the wavelength bins, so $W$ is a diagonal matrix.
+
+With the Savitzky-Golay algorithm, we have
+\begin{equation}
+    Y' = B_wY
+\end{equation}
+where $B_w$ is a matrix that is a function of the size of the smoothing window $w$. Additionally, smoothing the true spectrum should give us the true spectrum:
+\begin{align}
+    B_w\hat{Y}=\hat{Y}
+\end{align}
+
+In order to find the optimal value of $w$, we need an estimator of the unknown distance between the smoothed estimate and the true flux value. Using the definitions above, and $E[N^\dagger A N]=\mathrm{Tr}(A)$ where $N$ is a Gaussian random variable, we can rewrite
+
+\begin{align*}
+    ||Y'-\hat{Y}|| &= (Y'-Y+N)^\dagger W(Y'-Y+N)\\
+    &= (Y'-Y)^\dagger W(Y'-Y)+N^\dagger W(Y'-Y) + (Y'-Y)^\dagger W N + N^\dagger W N\\
+    &= ||Y'-Y||+2N^\dagger W(Y'-Y)+N^\dagger WN\\
+    &= ||Y'-Y||+2N^\dagger W(B_w - I)Y + N^\dagger WN\\
+    &= ||Y'-Y||+2N^\dagger W(B_w - I)(\hat{Y}+N) + N^\dagger WN\\
+    &= ||Y'-Y||+2N^\dagger W (B_w\hat{Y}-\hat{Y}) + 2N^\dagger W B_w N - N^\dagger W N\\
+    &= ||Y'-Y|| + 2N^\dagger W B_w N - N^\dagger W N
+\end{align*}
+
+Using properties of quadratic forms and the definition of the weight matrix $W$ and the noise vector $N$, for any symmetric matrix $A$, we have
+\begin{equation}
+    E[N^\dagger A N] = \mathrm{Tr}(AW^{-1})
+\end{equation}
+
+So, our estimator becomes
+
+\begin{equation}
+    E[||Y'-\hat{Y}||] = E[||Y'-Y||] + 2 \mathrm{Tr}(B_w) - n
+\end{equation}
+where $n$ is the rank of the noise vector $N$. Thus, the optimal window size $s$ is given by
+\begin{equation}
+    s = \operatorname*{arg\,max}_w \left(||Y'-Y|| + 2 \mathrm{Tr}(B_w) - n\right)
+\end{equation}

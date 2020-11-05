@@ -9,14 +9,30 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{bm}
-\usepackage{todonotes}
+\usepackage{natbib}
 \usepackage{hyperref}
-\usepackage[natbib=true, backend=bibtex]{biblatex}
-\bibliography{references}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{aas_macros}
+% \usepackage[natbib=true, backend=bibtex, style=authoryear]{biblatex}
+% \bibliography{references}
 
 \newcommand{\lcdm}{$\texrm{\Lambda}$CDM}
 \newcommand{\angstrom}{\mbox{\normalfont\AA}}
-\newcommand{\siliconii}{SiII $\lambda$6355}
+\newcommand{\stoe}{\texttt{spec2embed}}
+\newcommand{\etos}{\texttt{embed2spec}}
+\newcommand{\siliconii}{SiII \texorpdfstring{$\lambda$}{}6355}
+\newcommand\ion[2]{#1$\;${\scshape{#2}}}
+\newcommand{\CaIIHK}{\ion{Ca}{2}\;H\&K}
+\newcommand{\SiIIred}{\ion{Si}{2}\;$\lambda$6355}
+\newcommand{\SiIIblue}{\ion{Si}{2}\;$\lambda$5972}
+\newcommand{\sn}{SN~Ia}
+\newcommand{\sne}{SNe~Ia}
+\newcommand{\snf}{SNfactory}
+
+\defcitealias{boone_twins_2020a}{B20a}
+\defcitealias{boone_twins_2020b}{B20b}
 
 % To compile this file, run "latex thesis", then "biber thesis"
 % (or "bibtex thesis", if the output from latex asks for that instead),
@@ -34,7 +50,7 @@
 
 % Declarations for Front Matter
 
-\title{Empirical Models of Type Ia Supernovae: Applications for Next-Generation Cosmological Surveys}
+\title{Using Empirical Models of Type Ia Supernovae to Mitigate Systematic Biases in Next-Generation Cosmological Surveys}
 \author{Samantha Dixon}
 \degreesemester{Fall}
 \degreeyear{2020}
@@ -87,19 +103,7 @@ For something I don't know yet
 \listoftables
 
 \begin{acknowledgements}
-\begin{itemize}
-    \item Thesis advisor: Saul Perlmutter
-    \item Committee members: Bill Holzapfel (qual committee chair), Dan Kasen, Fernando Perez (filled in last minute)
-    \item Senior mentors: Greg Aldering, Alex Kim
-    \item Undergraduate mentors: Paolo Privitera, Al Kogut
-    \item Lab mates: Kyle Boone, Kara Ponder, Ravi Gupta, Clare Saunders, Aleks Cikota, Brian Hayden
-    \item Collaborators: David Rubin, Ben Rose, Rebekah Hounsell, Yu Ma
-    \item Square: Deeksha Chugh, Zaki Ali, Morag Scrimgeour, Stephane Fotso, Jackie Brosamer
-    \item GDSO: Mike Fang, Sumayah Rahman, James Arnemann
-    \item Friends: Jeffrey Epstein, Jennet Dickinson, Tom Zick, Jessica Avva
-    \item Family: Parents Lisa and Fred, brother Jim, grandmother Carol
-\end{itemize}
-
+\include{acknowledgments}
 \end{acknowledgements}
 
 \end{frontmatter}
@@ -110,10 +114,15 @@ For something I don't know yet
 \include{cte}
 \include{si_feat_pca}
 \include{snemo_kde}
-\include{snemo_features}
 \include{nonsim_reg_bias}
-\include{late_times}
+\include{nn_twins}
 
-\printbibliography
+\bibliographystyle{aasjournal}
+\bibliography{references}
 
+\appendix
+\include{appendix_si_feat_pca}
+\include{appendix_kde}
+\include{appendix_spec_feat}
+\include{appendix_reg_bias}
 \end{document}
