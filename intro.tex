@@ -130,7 +130,10 @@ After using the model to fit each supernova in a given data set, we typically st
     \label{eqn:standardization}
 \end{equation}
 where $m_B^*$ is the apparent B-band magnitude calculated from the best-fit model parameters $x_0$, $x_1$, and $c$ for each supernova and $\mu$ is the distance modulus to each supernova. $M$, $\alpha$, and $\beta$ are global parameters that describe the overall standardized absolute magnitude in the  Bessell B-band, the light curve shape-luminosity relation, and the color-luminosity relation, respectively. Typically, we start by assuming some fiducial cosmology that defines a distance $\mu_\text{cosmo}$, and we fit the global standardization parameters $M$, $\alpha$, and $\beta$ by minimizing the $\chi^2$ defined by
-$$\chi^2 = (\mu - \mu_\text{cosmo})^T C^{-1} (\mu - \mu_\text{cosmo}),$$
+\begin{equation}
+    \chi^2 = (\mu - \mu_\text{cosmo})^T C^{-1} (\mu - \mu_\text{cosmo}),
+    \label{eqn:chi2_cosmo_full_cov}
+\end{equation}
 where $C$ defines the covariance matrix between SN Ia observations. Then by fixing these values of $M$, $\alpha$, and $\beta$, we can perform a similar $\chi^2$ minimization that finds the best-fit cosmological parameters. The process repeats until convergence.
 
 Alternatively, the UNITY framework \citep{rubin_unity_2015} performs this standardization and cosmology fit from light curve parameters with a fully Bayesian approach. In this case, the nuisance parameters and cosmological parameters, as well as their full posterior distributions, are obtained using Hamiltonian Monte Carlo techniques.

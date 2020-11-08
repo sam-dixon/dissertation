@@ -1,7 +1,7 @@
 \chapter{Regression Bias Derivations}
 \section{Derivation of Regression Parameters in the Simultaneous Case}
 \label{app:simultaneous_ols}
-In ordinary least-squares regression, our goal is to minimize the loss function defined by the square of the residuals between the $y$ values predicted by our model ($\hat{\bm{Y}}\equiv\hat{\beta}_1\bm{x}_1 +\hat{\beta}_2\bm{x}_2\equiv\bm{X\hat{\beta}}$) and the data. 
+In ordinary least-squares regression, our goal is to minimize the loss function $L$ defined by the square of the residuals between the $y$ values predicted by our model ($\hat{\bm{Y}}\equiv\hat{\beta}_1\bm{x}_1 +\hat{\beta}_2\bm{x}_2\equiv\bm{X\hat{\beta}}$) and the data. 
 \begin{align*}
     L &= ||\hat{\bm{Y}}-\bm{Y}||^2\\
     &= (\bm{X\hat{\beta}}-\bm{Y})^T(\bm{X\hat{\beta}}-\bm{Y})\\
@@ -25,7 +25,7 @@ Plugging in our definition of $\bm{Y}$, we get
     \bm{\hat{\beta}} = (\bm{X}^T\bm{X})^{-1}\bm{X}^T(\bm{X\beta} + \bm{\epsilon}_\text{int})
 \label{eqn:sim_beta_vec_app}
 \end{equation}
-Since, by definition, $\langle\bm{\epsilon}_\text{int}\rangle=0$, $\langle\bm{\hat{\beta}}\rangle = \beta$, and the spread of the residuals ($\bm{r}=\bm{\hat{Y}}-\bm{Y}$) is simply $\sigint$:
+Since, by definition, $\langle\bm{\epsilon}_\text{int}\rangle=0$, $\langle\bm{\hat{\beta}}\rangle = \beta$, we can show that the spread of the residuals ($\bm{r}=\bm{\hat{Y}}-\bm{Y}$) is simply $\sigint$:
 \begin{align*}
     \text{var}(\bm{r}) &= \langle\bm{r}^2\rangle - \langle\bm{r}\rangle^2\\
     &= \langle(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})^T\rangle - \langle(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})\rangle^2\\
@@ -50,7 +50,9 @@ Calculating the individual components of this variance matrix in our two-dimensi
 
 \section{Derivation of Biases on Regression Parameters in the Non-Simultaneous Case}
 \label{app:non_simultaneous_ols}
-We can modify Eqn. \ref{eqn:sim_beta_vec} to obtain the predicted value of the slope in the first fit:
+Here we derive the biases on the regression parameters that occur when we perform bivariate linear regression one covariate at a time. We assume without loss of generality that we fit $\bm{Y}$ as a function of $\bm{x}_1$, giving an estimate of the slope that we denote $\hat{\beta}_1^\prime$.
+
+We can modify Eqn. \ref{eqn:sim_beta_vec_app} to obtain the predicted value of this slope in the first fit:
 \begin{align*}
     \langle\hat{\beta}_1^\prime\rangle &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{Y}\rangle\\
     &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_1\beta_1 + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_2\beta_2 + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{\epsilon}\rangle\\
@@ -85,7 +87,7 @@ and using the typical propagation of uncertainty formulae to find the variance o
 
 \section{Step Function Correction Derivations}
 \label{app:step_func}
-Again, we start with Eqn. \ref{eqn:sim_beta_vec} to obtain the expected value of the best-fit slope.
+Again, we start with Eqn. \ref{eqn:sim_beta_vec_app} to obtain the expected value of the best-fit slope from the linear portion of the fit.
 \begin{align*}
     \langle\hat{\alpha}^\prime\rangle &= \langle \bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{Y}\rangle \\
     &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_1\alpha + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\sgn(\bm{x}_2)\frac{\gamma}{2}+(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{\epsilon}_\text{int}\rangle\\

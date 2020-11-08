@@ -4,8 +4,8 @@
 \newcommand{\sgn}{\text{sgn}}
 \newcommand{\sigint}{\sigma_{\text{int}}}
 
-\section{Introduction} \label{sec:intro}
-Properties of Type Ia supernovae (SNe Ia) have been observed to be correlated with their absolute luminosities. Before accounting for these properties, the absolute brightnesses of typical SNe Ia vary by $\sim 0.4$ magnitudes. After accounting for correlations with the decay time of the light curve and the color of the object, their corrected absolute brightnesses are consistent to within $\sim 0.14$ mag \citep{phillips_absolute_1993, hamuy_morphology_1996, riess_precise_1996, perlmutter_measurements_1997, tripp_two-parameter_1998}. These calibrated brightness estimates make SNe Ia powerful cosmological distance indicators, and when combined with redshift measurements, allow us to map out the expansion history of the Universe. This technique was instrumental in the discovery of the accelerating expansion of the Universe \citep{perlmutter_measurements_1999, riess_observational_1998}, and continues to serve as a powerful probe of the nature of the dark energy driving this acceleration.
+\section{Overview} \label{sec:intro}
+As discussed in Chapter \ref{chap:intro}, the process of using various properties of Type Ia supernova observations to correct their absolute magnitudes is the key to using supernovae as cosmological distance indicators. This technique was instrumental in the discovery of the accelerating expansion of the Universe \citep{perlmutter_measurements_1999, riess_observational_1998}, and continues to serve as a powerful probe of the nature of the dark energy driving this acceleration.
 
 A common analysis method for standardizing supernova brightnesses uses the SALT2 spectral model \citep{guy_salt2_2007, betoule_improved_2014, mosher_cosmological_2014} to parametrize SN~Ia light curves. The model parameters represent an individual supernova's peak apparent brightness in the Bessell B-band ($m_B^*$), temporal width ($x_1$), and observed color ($c$). The distance modulus $\mu$ to each object $i$ at redshift $z_i$ is then modeled as a linear combination of these parameters:
 \begin{equation}
@@ -13,11 +13,12 @@ A common analysis method for standardizing supernova brightnesses uses the SALT2
 \end{equation}
 Typically, we would find the values of $M$, $\alpha$, and $\beta$ by minimizing the following quantity with respect to these parameters as well as the cosmological parameters of interest:
 \begin{equation}
-    \chi^2 = \displaystyle\sum_{i} \frac{\mu_i(z_i; m_B^*, x_1, c)-\mu_\text{cosmo}(z_i; \Theta)}{\sigma_\text{obs}^2+\sigint^2},
+    \chi^2 = \displaystyle\sum_{i} \frac{\mu_i(z_i; m_{B, i}^*, x_{1,i}, c_i)-\mu_\text{cosmo}(z_i; \bm{\Theta})}{\sigma_{\text{obs},i}^2+\sigint^2},
+    \label{eqn:chi2_cosmo_diag_cov}
 \end{equation}
-where $\mu_\text{cosmo}(z_i;\Theta)$ is the distance modulus-redshift relation determined by the cosmological parameters $\Theta$, and $\sigma_\text{obs}$ is the observational uncertainty of the measurements. $\sigma_\text{int}$ is the intrinsic dispersion of standardized magnitudes, usually found by iteratively calculating the value of $\sigint$ that ensures the minimum value of $\chi^2$ is equal to 1. This process is effectively a familiar linear regression.
+where $\mu_\text{cosmo}(z_i;\bm{\Theta})$ is the distance modulus-redshift relation determined by the cosmological parameters $\bm{\Theta}$, and $\sigma_{\text{obs},i}$ is the observational uncertainty of each supernova. $\sigma_\text{int}$ is the intrinsic dispersion of standardized magnitudes, usually found by iteratively calculating the value of $\sigint$ that ensures the minimum value of $\chi^2$ is equal to 1 \footnote{Equation \ref{eqn:chi2_cosmo_diag_cov} is equivalent to Equation \ref{eqn:chi2_cosmo_full_cov}, assuming the covariance matrix is diagonal and contains just the measurement and intrinsic error terms}. This process is effectively a familiar linear regression.
 
-The need to add an additional uncertainty term in the form of $\sigma_{int}$ suggests that the linear relationship between SALT2 parameters and absolute magnitude may not capture all of the variation in supernova magnitudes, or that the parametrization provided with SALT2 may not capture all of the information that is needed to fully standardize supernova magnitudes \citep{saunders_snemo_2018}. This motivates the search for other observable properties of SNe~Ia that might explain this remaining variation, as well as the use of these other properties for standardization. One way to search for such properties is to measure correlations between these properties and the Hubble residuals $\mu_i(z_i;m_B^*, x_1, c)-\mu_\text{cosmo}(z_i;\Theta)$. A number of studies \citep{kelly_hubble_2010, lampeitl_effect_2010, sullivan_dependence_2010, childress_host_2013} have observed such a correlation with the host galaxy stellar mass: supernovae in galaxies with $\log(\mathcal{M}/\mathcal{M}_\odot) > 10$ are $\sim0.1$ magnitudes brighter than supernovae in galaxies with $\log(\mathcal{M}/\mathcal{M}_\odot) < 10$. \cite{rigault_evidence_2013}, \cite{childress_ages_2014}, and  \cite{rigault_confirmation_2015} show that this effect is likely due to similar correlations with host galaxy age.
+The need to add an additional uncertainty term in the form of $\sigma_{int}$ suggests that the linear relationship between SALT2 parameters and absolute magnitude may not capture all of the variation in supernova magnitudes, or that the parametrization provided with SALT2 may not capture all of the information that is needed to fully standardize supernova magnitudes \citep{saunders_snemo_2018}. This motivates the search for other observable properties of SNe~Ia that might explain this remaining variation, as well as the use of these other properties for standardization. One way to search for such properties is to look for correlations between these properties and the Hubble residuals $\mu_i(z_i;m_B^*, x_1, c)-\mu_\text{cosmo}(z_i;\Theta)$. A number of studies \citep{kelly_hubble_2010, lampeitl_effect_2010, sullivan_dependence_2010, childress_host_2013} have observed such a correlation with the host galaxy stellar mass: supernovae in galaxies with $\log(\mathcal{M}/\mathcal{M}_\odot) > 10$ are $\sim0.1$ magnitudes brighter than supernovae in galaxies with $\log(\mathcal{M}/\mathcal{M}_\odot) < 10$. \cite{rigault_evidence_2013}, \cite{childress_ages_2014}, and  \cite{rigault_confirmation_2015} show that this effect is likely due to similar correlations that exist with host galaxy age.
 
 Reporting the size of correlations with the linear regression residuals is mathematically well-motivated if the covariate used to predict these residuals is not itself correlated with those used in the original regression (if, for example, host mass were not correlated with light curve parameters). However, if this key assumption is violated, we find ourselves in a situation referred to in the statistics and econometrics literature as ``multicollinearity" \cite[e.g.][]{farrar_multicollinearity_1967}. Multicollinearity results in unreliable and biased estimates of effect sizes.  A related concern discussed frequently  in these fields is ``omitted variable bias", in which a misspecification of the regression problem results in biased estimates of the true regression parameters \citep{clarke_phantom_2005, wooldridge_introductory_2013}. Indeed, \cite{smith_first_2020} shows some evidence of these effects in supernova cosmology, by  examining the bias on the measurement of the host galaxy mass step (which in turn biases estimates on the dark energy equation-of-state parameter) due to the correlation between host galaxy mass and SALT2 $x_1$.
 
@@ -50,14 +51,14 @@ where $\beta_1$ and $\beta_2$ are the regression coefficients, and $\epsilon_{in
 
 % The marginal distributions of $x_1$ and $x_2$ are normal with variance $\sigma_1^2$ and $\sigma_2^2$ respectively. The distribution of $y$, which we can obtain from the standard propagation of uncertainty rules, is also normal, with variance given by $\sigma_y^2=\sigma_1^2 + \sigma_2^2 + 2\rho\sigma_1\sigma_2+\sigint^2$.
 
-Standard simultaneous two-dimensional least-squares regression gives us the estimated coefficient vector $\bm{\hat{\beta}}$ which minimize the square of the residuals between the values predicted by the model ($\bm{\hat{Y}} \equiv \hat{\beta}_1\bm{x}_1 + \hat{\beta}_2\bm{x}_x \equiv \bm{X}\hat{\beta}$) and the data. As we show in Appendix \ref{app:simultaneous_ols}, these estimated values are
+Standard simultaneous two-dimensional least-squares regression gives us the estimated coefficient vector $\bm{\hat{\beta}}$ which minimize the square of the residuals between the values predicted by the model ($\bm{\hat{Y}} \equiv \hat{\beta}_1\bm{x}_1 + \hat{\beta}_2\bm{x}_x \equiv \bm{X}\hat{\beta}$) and the data. As we show in Appendix \ref{app:simultaneous_ols}, these estimated coefficients are
 \begin{equation}
     \bm{\hat{\beta}} = (\bm{X}^T\bm{X})^{-1}\bm{X}^T(\bm{X\beta} + \bm{\epsilon}_\text{int})
 \label{eqn:sim_beta_vec}
 \end{equation}
-Since the expectation value of $\bm{\epsilon}_\text{int}$ is 0 by definition, the expectation value of the recovered coefficients from simultaneous regression is identical to the coefficients ($\langle\bm{\hat{\beta}}\rangle=\bm{\beta}$) regardless of the values of the regression coefficients, the covariance matrix components, or the size of the intrinsic scatter. We also show in Appendix \ref{app:simultaneous_ols} that the standard deviation of the residuals ($\bm{r}=\bm{\hat{Y}}-\bm{Y})$ is simply $\sigint$.
+Since the expectation value of $\bm{\epsilon}_\text{int}$ is 0 by definition, the expectation value of the recovered coefficients from simultaneous regression is identical to the coefficients ($\langle\bm{\hat{\beta}}\rangle=\bm{\beta}$) regardless of the values of the regression coefficients, the covariance matrix components, or the size of the intrinsic scatter. We also show in Appendix \ref{app:simultaneous_ols} that the standard deviation of the residuals ($\bm{r}\equiv\bm{\hat{Y}}-\bm{Y})$ is simply $\sigint$.
 
-In summary, when treating this data set with a simultaneous linear regression, we are able to reliably recover both the true regression coefficients and intrinsic dispersion. Though there is some uncertainty on the values of the regression coefficients that does depend on the correlation between the covariates, this uncertainty is also inversely proportional to the number of samples fit in the regression and is therefore able to be controlled in the case where $N$ is sufficiently large (see Eqn. \ref{eqn:var_betahat_simultaneous} in Appendix \ref{app:simultaneous_ols}).
+In summary, when treating this data set with a simultaneous linear regression, we are able to reliably recover both the true regression coefficients and intrinsic dispersion. Though there is some uncertainty on the values of the regression coefficients that does depend on the correlation between the covariates, this uncertainty is also inversely proportional to the number of samples fit in the regression and is therefore able to be controlled in the case where $N$ is sufficiently large (see Equation \ref{eqn:var_betahat_simultaneous} in Appendix \ref{app:simultaneous_ols}).
 
 However, often times in supernova cosmology, we do not perform a full simultaneous fit of all of our regression parameters. Instead, we fit the distance modulus as a linear function of SALT2 parameters and then add a correction to these distance moduli by fitting the distance modulus residuals as a function of some other parameter. This can be thought of as being analogous to performing this multivariate linear regression one covariate at a time.
 
@@ -79,7 +80,7 @@ We also calculate the spread of the final residuals in Appendix \ref{app:non_sim
 The standard deviation on the residuals from this analysis, often reported as the root-mean-squared (RMS) residuals, is in fact inflated by a value that scales quadratically with the correlation between the parameters and linearly with the size of the secondary effect.
 \section{Step Function Corrections}
 \label{sec:add_step}
-Most common analyses used in supernova cosmology do not use a linear model to correct the Hubble diagram residuals for host mass; they use a step function\footnote{In order to maintain the differentiability of this function, most analyses approximate a step function with a logistic function with a large growth rate. To ease our calculations (particularly in calculating expected covariance, Eqn. \ref{eqn:exp_val_abs_val}), we use the sign function. The differences are between the two for our purposes are negligible}. We'll modify the toy model presented in Section \ref{sec:toy_model}, and consider instead
+In the case of host property correction, most common analyses used in supernova cosmology do not use a linear model to correct the Hubble diagram residuals; they use a step function\footnote{In order to maintain the differentiability of this function, most analyses approximate a step function with a logistic function with a large growth rate. To ease our calculations (particularly in calculating expected covariance, Equation \ref{eqn:exp_val_abs_val}), we use the sign function. The differences are between the two for our purposes are negligible}. We'll modify the toy model presented in Section \ref{sec:toy_model}, and consider instead
 \begin{equation}
     y_i = \alpha x_1^{(i)} + \frac{\gamma}{2}\sgn(x_2^{(i)})
 \label{eqn:linear_and_step}
@@ -101,11 +102,11 @@ and the spread of the remaining residuals is
 \begin{equation}
     \sigma_{\bm{r}_\beta}^2 = \frac{\gamma^2\rho^2}{2\pi}\left(1-\frac{2\rho^2}{\pi}\right) + \sigint^2
 \end{equation}
-So, using a step-function secondary correction gives us similar biases to the linear secondary correction. The size of the step is underestimated by a factor that scales quadratically with the correlation coefficient between covariates and linearly with the true step size. Additionally, the size of the linear correction term is overestimated by a factor that scales linearly with the step size and the correlation coefficient. Finally, the variance of the residuals after correction is inflated by a similar term.
+So, using a step-function secondary correction gives us similar biases to the linear secondary correction. The size of the step is underestimated by a factor that scales quadratically with the correlation coefficient between covariates and linearly with the true step size. Additionally, the size of the linear correction term is overestimated by a factor that scales linearly with the step size and the correlation coefficient. Finally, the variance of the residuals after correction is inflated by a factor that scales similarly.
 
 \section{Comparison to Data}
 \label{sec:data_comparison}
-The remaining difference between these toy models and the actual data is that the true distributions of $x_1$, $c$, and $\mathcal{M}_\text{host}$ are not purely Gaussian. While we cannot derive closed-form relations describing the impact of non-simultaneous fitting, we can simulate these effects. In this analysis, we take published values of $x_1$, $c$ and $\log(\mathcal{M}_\text{host}/\mathcal{M}_\odot)$ from the low- and mid-redshift samples of supernovae from the first three years of the Dark Energy Survey \cite[][hereafter referred to as the Low-z and DES subsamples]{abbott_first_2019}, along with the Pantheon data set \citep{scolnic_complete_2018}, which combines spectroscopically-classified supernovae from PanSTARRS supernovae \cite[PS1;][]{rest_cosmological_2014, scolnic_color_2014} with supernovae from the SuperNova Legacy Survey \cite[SNLS;][]{conley_supernova_2011, sullivan_snls3_2011} and the Sloan Digital Sky Survey \cite[SDSS;][]{frieman_sloan_2008, kessler_first-year_2009, sako_data_2018} \footnote{The DES and Low-z sample data can be downloaded at \url{https://des.ncsa.illinois.edu/releases/sn}, and the Pantheon data may be found at \url{https://archive.stsci.edu/prepds/ps1cosmo/index.html}.}. We then modeled $\delta$, a quantity akin to the Hubble residuals without any corrections for the light curve shape or color parameters and assuming a fixed cosmology:
+The remaining difference between these toy models and the actual data is that the true distributions of $x_1$, $c$, and $\mathcal{M}_\text{host}$ are not purely Gaussian. While we cannot derive closed-form relations describing the impact of non-simultaneous fitting, we can simulate these effects. In this analysis, we take published values of $x_1$, $c$ and $\log(\mathcal{M}_\text{host}/\mathcal{M}_\odot)$ from the low- and mid-redshift samples of supernovae from the first three years of the Dark Energy Survey \cite[][hereafter referred to as the Low-z and DES subsamples]{abbott_first_2019}, along with the Pantheon data set \citep{scolnic_complete_2018}, which combines spectroscopically-classified supernovae from PanSTARRS supernovae \cite[PS1;][]{rest_cosmological_2014, scolnic_color_2014} with supernovae from the SuperNova Legacy Survey \cite[SNLS;][]{conley_supernova_2011, sullivan_snls3_2011} and the Sloan Digital Sky Survey \cite[SDSS;][]{frieman_sloan_2008, kessler_first-year_2009, sako_data_2018}\footnote{The DES and Low-z sample data can be downloaded at \url{https://des.ncsa.illinois.edu/releases/sn}, and the Pantheon data may be found at \url{https://archive.stsci.edu/prepds/ps1cosmo/index.html}.}. We then modeled $\delta$, a quantity akin to the Hubble residuals without any corrections for the light curve shape or color parameters and assuming a fixed cosmology:
 \begin{equation}
     \delta= M + \alpha x_1 + \beta c + \frac{\gamma}{2}\sgn\left[\log\left(\frac{\mathcal{M}_\text{host}}{\mathcal{M}_\odot}\right) - 10 \right] + \epsilon
 \end{equation}
@@ -128,47 +129,68 @@ where $\epsilon$ is a Gaussian distributed noise vector with variance $\sigint^2
 The result of these simulations is a table of data subsets, true values of $\alpha$, $\beta$, and $\gamma$, simultaneous best-fit values $\hat{\alpha}$, $\hat{\beta}$, and $\hat{\gamma}$, as well has non-simultaneous best-fit values $\hat{\alpha}^\prime$, $\hat{\beta}^\prime$, and $\hat{\gamma}^\prime$. Regardless of true parameter value, the simultaneous fit parameters all match the true parameters. However, the magnitude of the error on the non-simultaneous best-fit parameters depends on the data subset in question as well as on the true values of the parameters. The relationships are all linear, i.e.
 \begin{equation}
     \gamma = c_{\gamma, 0} + \displaystyle\sum_{i\in\{\hat{\alpha}, \hat{\beta}, \hat{\gamma}\}} c_{\gamma, i}i
+    \label{eqn:lin_decomp_reg_bias}
 \end{equation}
-and similarly for $\alpha$ and $\beta$. This is not unexpected; we see this in our toy models as well (see Eqn. \ref{eqn:slope_inflation}, for example). Non-zero values of coefficients other than $c_{x, 0}$ indicate that their is ``leakage" from one standardization parameter to the other, i.e. if $c_{\gamma, \alpha} \neq 0$, then the size of the $\alpha$ correction impacts the reported size of the $\gamma$ corrections. Moreover, these coefficients define a linear transformation between the true regression parameters and those coming from a non-simultaneous fit. The inverse of these transformations can then be used to correct non-simultaneous regressions. The transformations obtained from our simulations are presented in Table \ref{tab:trans}.
+and similarly for $\alpha$ and $\beta$. This is not unexpected; we see this in our toy models as well (see Equation \ref{eqn:slope_inflation}, for example). Non-zero values of coefficients other than $c_{x, 0}$ indicate that there is ``leakage" from one standardization parameter to the other, i.e. if $c_{\gamma, \alpha} \neq 0$, then the size of the $\alpha$ correction impacts the reported size of the $\gamma$ corrections. Importantly, these coefficients define a linear transformation between the true regression parameters and those coming from a non-simultaneous fit, so the inverse of these transformations can be used to correct previous non-simultaneous regressions. The transformations we obtained from our simulations are presented in Tables \ref{tab:trans_alpha}, \ref{tab:trans_beta}, and \ref{tab:trans_gamma}.
 
 \begin{table}[htbp]
 \centering
-    \begin{tabular}{ccccccccccccc}\toprule
+    \begin{tabular}{ccccc}\toprule
     \multirow{2}{*}{Data set} &
-    \multicolumn{4}{c}{$\alpha$} &
-    \multicolumn{4}{c}{$\beta$} &
-    \multicolumn{4}{c}{$\gamma$} \\
-       {}  &  $c_{\alpha, 0}$ & $c_{\alpha,\hat{\alpha}}$ & $c_{\alpha,\hat{\beta}}$ & $c_{\alpha,\hat{\gamma}}$
-       &  $c_{\beta, 0}$ &  $c_{\beta,\hat{\alpha}}$ & $c_{\beta,\hat{\beta}}$ & $c_{\beta,\hat{\gamma}}$
-       &  $c_{\gamma, 0}$ &  $c_{\gamma,\hat{\alpha}}$ & $c_{\gamma,\hat{\beta}}$ & $c_{\gamma,\hat{\gamma}}$ \\\midrule
+    \multicolumn{4}{c}{$\alpha$}\\
+       {}  &  $c_{\alpha, 0}$ & $c_{\alpha,\hat{\alpha}}$ & $c_{\alpha,\hat{\beta}}$ & $c_{\alpha,\hat{\gamma}}$\\\midrule
         DES
         & 0.000 & 1.000 & 0.000 & 0.335
-        & 0.001 & 0.000 & 0.999 & -0.702
-        & 0.000 & 0.000 & 0.000 & 1.302
         \\
         PS1
         & 0.000 & 1.000 & 0.000 & 0.135
-        & 0.002 & 0.000 & 0.999 & -0.607
-        & 0.000 & 0.000 & 0.000 & 1.111
         \\
         SDSS
         & 0.000 & 1.000 & 0.000 & 0.125
-        & 0.002 & -0.002 & 1.000 & -0.134
-        & 0.000 & 0.000 & 0.000 & 1.237
         \\
         SNLS
         & 0.000 & 1.000 & 0.000 & 0.203
-        & 0.002 & -0.001 & 0.999 & -0.565
-        & 0.000 & 0.000 & 0.000 & 1.140
         \\
         Low-z
         & 0.000 & 1.000 & 0.000 & 0.194
-        & 0.003 & 0.001 & 0.999 & 1.258
-        & 0.000 & 0.000 & 0.000 & 2.072
         \\\bottomrule
     \end{tabular}
-    \caption{Linear transformation coefficients between the standardization hyperparameters obtained with a non-simultaneous fit and the true values.}
-    \label{tab:trans}
+    \caption{Linear transformation coefficients (see Equation \ref{eqn:lin_decomp_reg_bias}) between the standardization hyperparameter $\alpha$, representing the light curve shape-luminosity correction, obtained with a non-simultaneous fit and the true values.}
+    \label{tab:trans_alpha}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ccccc}\toprule
+        \multirow{2}{*}{Data set} &
+        \multicolumn{4}{c}{$\beta$}\\
+        {} &  $c_{\beta, 0}$ &  $c_{\beta,\hat{\alpha}}$ & $c_{\beta,\hat{\beta}}$ & $c_{\beta,\hat{\gamma}}$\\\midrule
+        DES & 0.001 & 0.000 & 0.999 & -0.702\\
+        PS1 & 0.002 & 0.000 & 0.999 & -0.607\\
+        SDSS & 0.002 & -0.002 & 1.000 & -0.134\\
+        SNLS & 0.002 & -0.001 & 0.999 & -0.565\\
+        Low-z & 0.003 & 0.001 & 0.999 & 1.258\\
+    \bottomrule
+    \end{tabular}
+    \caption{Same as Table \ref{tab:trans_alpha}, but for the standardization hyperparameter $\beta$, representing the color-luminosity correction.}
+    \label{tab:trans_beta}
+\end{table}
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ccccc}\toprule
+        \multirow{2}{*}{Data set} &
+        \multicolumn{4}{c}{$\gamma$}\\
+        {} &  $c_{\gamma, 0}$ &  $c_{\gamma,\hat{\alpha}}$ & $c_{\gamma,\hat{\beta}}$ & $c_{\gamma,\hat{\gamma}}$ \\\midrule
+        DES & 0.000 & 0.000 & 0.000 & 1.302\\
+        PS1 & 0.000 & 0.000 & 0.000 & 1.111\\
+        SDSS & 0.000 & 0.000 & 0.000 & 1.237\\
+        SNLS & 0.000 & 0.000 & 0.000 & 1.140\\
+        Low-z & 0.000 & 0.000 & 0.000 & 2.072\\
+    \bottomrule
+    \end{tabular}
+    \caption{Same as Table \ref{tab:trans_alpha}, but for the standardization hyperparameter $\gamma$, representing the host mass-luminosity correction.}
+    \label{tab:trans_gamma}
 \end{table}
 
 We can see that there is significant leakage between the size of the host mass step and the stretch and color standardization parameters $\alpha$ and $\beta$. Multiplying the coefficients relating the non-simultaneously obtained step-size by the typical size of the measured step (0.07 mag.), we can see that this leakage results in a 5-10\% error on the typical size (0.14) of the stretch parameter $\alpha$ and a ~1\% error on the typical size (3.0) of the color parameter $\beta$.
@@ -181,13 +203,6 @@ We have worked through a pedagogical example to show that performing linear regr
 
 We have also presented numerical simulations based on observed data to find corrections to the biases that are introduced from non-simultaneous regression methods. Each data set studied shows the possibility of a large underestimate of the size of the host mass step regardless of values of other nuisance parameters. There are also minor biases in the model parameters governing the relationship between luminosity and light curve width (SALT2 $\alpha$) and luminosity and color (SALT2 $\beta$).
 
-Biases are be introduced when the assumptions underlying an analysis method are overlooked. In this particular case, there is an implicit assumption is that all covariates must be uncorrelated in order to prevent biases when performing a two-step regression. This assumption is largely ignored in the literature, leading directly to biases on reported effect sizes (the size of the mass step) and the spread of the regression residuals (RMS Hubble residuals). These biases can be easily avoided by fitting all variables simultaneously..
+Biases are introduced when the assumptions underlying an analysis method are overlooked. In this particular case, there is an implicit assumption is that all covariates must be uncorrelated in order to prevent biases from a two-step regression. This assumption is largely ignored in the supernova cosmology literature, leading directly to biases on reported effect sizes (the size of the mass step) and the spread of the regression residuals (RMS Hubble residuals). These biases can be easily avoided by fitting all variables simultaneously.
 
-%% For this sample we use BibTeX plus aasjournals.bst to generate the
-%% the bibliography. The sample63.bib file was populated from ADS. To
-%% get the citations to show in the compiled file do the following:
-%%
-%% pdflatex sample63.tex
-%% bibtext sample63
-%% pdflatex sample63.tex
-%% pdflatex sample63.tex
+An interactive notebook with data simulations showing the derived relationships between effect sizes and correlation coefficients for our toy model is available through Google Colab at \url{https://colab.research.google.com/drive/1p2hPC5zsZ20A8BDjH3n1Sjlb8MVi8YB2}. The data and code used for the simulations with literature data is also publicly available at \url{https://github.com/sam-dixon/sn_multicollinearity}.
