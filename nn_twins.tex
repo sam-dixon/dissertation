@@ -3,15 +3,7 @@
 
 \section{Introduction}
 \label{sec:nn_twins_intro}
-Observations Type Ia supernovae (SNe Ia) continue to serve as  one of the strongest tools for measuring cosmological distances and inferring the expansion history of the universe. Their strength as distance indicators relies on their relative homogeneity in absolute brightness. Much effort has gone into improving how standard these standard candles are, using empirical correlations between observable properties and absolute luminosity to correct differences in peak brightness based on measured differences in these other properties.
-
-Without any additional corrections, SNe Ia peak magnitudes are consistent to within $\sim0.4$ magnitudes. Initially, SNe Ia were standardized using the decay time of their light curves \citep{phillips_absolute_1993}. Later, additional correlations were found between brightness and broadband $B-V$ colors \citep{riess_precise_1996, tripp_two-parameter_1998}. Including these corrections decreases the spread of the corrected peak brightnesses to the level of $\sim 0.15$ magnitudes.
-
-Today, most cosmology analyses use parametrized models of the underlying spectral energy distribution of SNe Ia. The most common model, SALT2 \citep{guy_salt2_2007, betoule_improved_2014} parametrizes the full spectral evolution of SNe Ia with two components: $x_1$, which mimics the light curve width used in original standardization processes, and $c$ which captures the color differences due to both intrinsic variation and dust in the line of sight. These two corrections standardize the SNe Ia brightnesses to 0.14 mag. SNEMO, introduced in \cite{saunders_snemo_2018}, extends the SALT2-like standardization methodology by including additional degrees-of-freedom in the model in order to describe the variation in supernova spectral time-series data. The 7-component SNEMO7 model is able to standardize supernova magnitudes to 0.113 mag.
-
-Much work has also gone into understanding ways to standardize supernovae using their spectra, rather than exclusively using broadband light curves. Some studies have identified particular regions of the spectra that can be used to standardize their brightness. \citet{nugent_evidence_1995} identified that the ratio of the equivalent widths of \ion{Si}{2} 5972~\AA\ and \ion{Si}{2} 6355~\AA\ are strongly related to light curve width, and \citet{bailey_using_2009} found that the flux ratios between specific wavelengths can be used for standardization. \citet{nordin_understanding_2018} uses specific spectral features in the near-UV to standardize. \cite{leget_sugar_2020}, built SUGAR, an SED model based on a PCA decomposition of a number of spectral features across a wide range of wavelengths.
-
-\citet{fakhouri_improving_2015} took a slightly different approach, directly comparing spectra near maximum brightness to one another to identify pairs of ``twins". On average, the best 15\% of twins differ in magnitude by only 0.08 mag, making this twinness methodology one of the best methods for standardizing supernova magnitudes. \citet{boone_twins_2020a} (hereafter \citetalias{boone_twins_2020a}) aimed to elucidate the mathematical structure underlying this twinning method by applying manifold learning techniques to identify a low-dimensional representation of the twinness space. Using projections into this lower dimensional space, \citet{boone_twins_2020b} (hereafter \citetalias{boone_twins_2020b}) was then able to model the necessary corrections to the supernova magnitudes based on these projections, standardizing supernovae with an RMS error of $0.101 \pm 0.007$ mag.
+\citet{boone_twins_2020a} (hereafter \citetalias{boone_twins_2020a}) aimed to elucidate the mathematical structure underlying the twinning method of \citet{fakhouri_improving_2015} by applying manifold learning techniques to identify a low-dimensional representation of the twinness space. Using projections into this lower dimensional space, \citet{boone_twins_2020b} (hereafter \citetalias{boone_twins_2020b}) was then able to model the necessary corrections to the supernova magnitudes based on these projections, standardizing supernovae with an RMS error of $0.101 \pm 0.007$ mag.
 
 However, the \citetalias{boone_twins_2020b} standardization analysis requires at least one spectrum in a narrow phase range around maximum brightness. The goal of the work we present here is two-fold: first to extend the use of the twins embedding standardization to a wider range of phases, and second to create a generative model that can be used in simulations or fitting lower-resolution spectroscopy or broadband photometry. The first goal is accomplished with a model that we refer to throughout the work as \stoe, which takes a spectrum and predicts its phase along with the extinction parameter and twins embedding coordinate of the supernova that spectrum was taken from. To accomplish the second goal, we build a model that we call \etos{} to predict the spectral energy distribution (SED) of a supernova given its location in the twins embedding space and dust extinction parameter, up to a gray magnitude offset.
 
@@ -31,6 +23,7 @@ Isomap is a non-linear machine learning technique for finding approximately isom
 The twins embedding coordinates can also be used to correct for the intrinsic contributions to the magnitude residuals from RBTL. \citetalias{boone_twins_2020b} presents a Gaussian process (GP) regression model to estimate the RBTL magnitude residual from the Isomap embedding coordinate. The GP allows us to capture non-linear relationships between the twins embedding coordinates and the magnitudes and also provides an estimate of the error. Mathematically, they model:
 \begin{equation}
     \vec{m} \sim \mathcal{GP}\left(m_{\text{ref}} + \omega\Delta A_V, \mathbb{I}\cdot(\vec{\sigma}_{\text{pv}}^2 + \sigma_u^2) + K_{3/2}(\vec{\xi}, \vec{\xi}; A, l)\right)
+    \label{eqn:gp}
 \end{equation}
 The $\omega\Delta A_V$ term and arbitrary $m_{\text{ref}}$ in the mean function corrects for the possibility of introducing a correlation between extinction and magnitude from an incorrect fiducial $R_V$. The correlation between embedding coordinate and magnitude is captured by a 3-dimension Mat\'{e}rn 3/2 kernel with length scale $l$ and amplitude $A$. The per-supernova uncorrelated errors from peculiar velocities enter into the model with through $\sigma_{\text{pv}}$. Any unexplained error (including systematic error from the analysis) is captured by $\sigma_u$, which is constant for all objects in the sample.
 
@@ -111,7 +104,8 @@ As explained in Section \ref{sec:nn_twins_data_split}, we perform 5-fold cross-v
         \multirow{2}{*}[-1em]{Value options} & \stoe{} & \etos\\
          & & preferred & preferred\\\midrule
         Network depth & [1, 2, 3, 4] & 3 & 4\\
-        Nodes per layer & [72, 100, 128, 144, 172, 200, 228, 256, 288] & 256 & 144\\
+        Nodes per layer & [72, 100, 128, 144, 172, & 256 & 144\\\
+        & 200, 228, 256, 288] & & \\
         Dropout probability & [0, 0.001, 0.005, 0.01, 0.05, 0.1] & 0.001 & 0\\
         Batch size & [2, 4, 8, 16, 32] & 16 & 32\\\bottomrule
     \end{tabular}
@@ -130,7 +124,7 @@ Repeating the leave-one-out cross-validation analysis on the full data set yield
 
 Our analysis also differs from the \citetalias{boone_twins_2020b} analysis in that we are interested in building a model that can predict the supernova properties (like extinction and embedding coordinate) from multiple spectra. Thus, we also present the same measures of the spread in the per-supernova metrics weighted by the number of spectra that appear for those supernovae in our data set. The resulting values are all consistent with one another, but the error bars for the weighted values are smaller, reflecting the increase in the number of observations.
 
-\begin{table}[htbp]
+\begin{sidewaystable}
     \centering
     \begin{tabular}{rcccccc}\toprule
         & & & RMS & NMAD & Weighted RMS & Weighted NMAD\\
@@ -142,7 +136,7 @@ Our analysis also differs from the \citetalias{boone_twins_2020b} analysis in th
     \end{tabular}
     \caption{Summary of standardization results using the \citetalias{boone_twins_2020b} embedding coordinates and extinction parameters using our training and test sets. Weighted measures of the spread are weighted by the number of spectral observations for an individual supernova. All values are consistent with the values found in \citetalias{boone_twins_2020b}.}
     \label{tab:standardization_test_results}
-\end{table}
+\end{sidewaystable}
 
 % We trained an additional version of the GP regression model, conditioned on the \citetalias{Boone2020b} embedding coordinate values of \emph{all} of the supernovae in the standardization data set. This model can be used for a separate comparison to give us a sense of the size of the error stemming from directly propagating the error from the neural network predictions of the embedding coordinate to the error on the GP-predicted magnitude, without the additional error coming from the conditioning of the GP.
 
@@ -161,8 +155,8 @@ Using the final trained \stoe{} model, we now evaluate its performance on the te
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/nn_twins/scatter_spec2embed_phase_color.pdf}
-    \caption{Comparison of phase and extinction parameters determined by the \stoe{} model and ground truth values presented in \citetalias{boone_twins_2020a}. The solid lines in each of the upper panels represents equivalence. We also note the root-mean-squared-error (RMSE) and the normalized median absolute deviation (NMAD) of the residuals (predicted value $-$ true value) for each property. The lower panels show these residuals as a function of the true values. Shaded regions in the lower panels indicate the 1-, 2-, and 3-$\sigma$ fluctuations of these residuals about the median.}
+    \includegraphics[width=0.9\textwidth]{figures/nn_twins/scatter_spec2embed_phase_color_mag.pdf}
+    \caption{Comparison of phase and extinction parameters determined by the \stoe{} model and ground truth values presented in \citetalias{boone_twins_2020a}. The solid lines in each of the upper panels represents equivalence. We also note the root-mean-squared-error (RMSE) and the normalized median absolute deviation (NMAD) of the residuals (predicted value $-$ true value) for each property. The lower panels show these residuals as a function of the true values. Shaded regions in the lower panels indicate the 1-, 2-, and 3-$\sigma$ fluctuations of these residuals about the median. The secondary axis in the bottom right panel indicates the linear scaling between the error on the extinction parameter and the final standardized magnitude.}
     \label{fig:scatter_spec2embed_phase_color}
 \end{figure}
 
@@ -175,7 +169,7 @@ Using the final trained \stoe{} model, we now evaluate its performance on the te
 
 The phase recovery is slightly more accurate than the commonly used SNID program \citep{blondin_determining_2007}, which can constrain the phase to within $\pm 2.9$ days. It is not quite as accurate as other neural network based techniques like \citet{stahl_deepsip_2020}, which constrains the phase to with $\sim\pm 1$ day. Even in the restricted phase baseline of -4 to +12 days beyond maximum brightness that is used in \citet{stahl_deepsip_2020}, we have an NMAD of the residuals of 2.4 days. However, as we will see in Section \ref{sec:standardization} that the phase determination is not as important for standardization as the accuracy in determining the extinction and location in the twins embedding space of each object. 
 
-The accuracy in determining the extinction parameter is sufficient for standardization, as a 0.1 mag error in $\Delta A_V$ propagates to a 0.015 mag error in the final standardized brightness. There is one large outlier in color in our test set: SN2006X. This object is highly extincted ($\Delta A_V=3.31$), more so than the most highly extincted object in the training set (SN2012cu, $\Delta A_V=2.8$). Both of these highly extincted objects are excluded from the standardization analysis to avoid biases from uncertainties in interstellar dust properties, so the errors here do not propagate to the standardization analysis.
+The relationship between the extinction parameter and the standardized magnitude is linear (see Equation \ref{eqn:gp}). The slope of this linear correction, $\omega$, therefore tells us how the errors in the extinction parameter propagate to errors on the standardization. This linear transformation is included in the secondary axis of Figure \ref{fig:scatter_spec2embed_phase_color} as the ``effective magnitude offset". The value of $\omega$ we find in Section \ref{sec:standardization} is -0.158, telling us that he accuracy in determining the extinction parameter is sufficient for standardization, as the 0.1 error in $\Delta A_V$ propagates to a ~0.015 mag error in the final standardized brightness. There is one large outlier in color in our test set: SN2006X. This object is highly extincted ($\Delta A_V=3.31$), more so than the most highly extincted object in the training set (SN2012cu, $\Delta A_V=2.8$). Both of these highly extincted objects are excluded from the standardization analysis to avoid biases from uncertainties in interstellar dust properties, so the errors here do not propagate to the standardization analysis.
 
 \subsection{Standardization Results} 
 \label{sec:standardization}
@@ -228,7 +222,7 @@ In Table \ref{tab:standardization_loo_results}, we summarize the size of the sta
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/nn_twins/scatter_loo_spec2embed_phase_color.pdf}
+    \includegraphics[width=0.9\textwidth]{figures/nn_twins/scatter_loo_spec2embed_phase_color_mag.pdf}
     \caption{Same as Figure \ref{fig:scatter_spec2embed_phase_color}, but using the leave-one-out cross-validation analysis. As in Figure \ref{fig:scatter_spec2embed_phase_color}, each point represents a single spectrum. However, the predictions are made using networks trained on every supernova except the supernova the spectrum comes from.}
     \label{fig:scatter_spec2embed_loo_phase_color}
 \end{figure}
