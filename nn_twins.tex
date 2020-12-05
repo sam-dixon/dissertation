@@ -313,7 +313,7 @@ To get a qualitative sense of the performance of this model, we show some exampl
     \label{tab:snf_tophats}
 \end{table}
 
-We also examined the performance of this model over the full test set more quantitatively. For each spectrum of the supernovae in the test set, we calculated the flux residuals: the difference between the observed and predicted values. In Figure \ref{fig:e2s_wavelength_resids} we show the RMS of these residuals as a function of wavelength bin, normalized by the average flux in each wavelength bin marginalized over all observed phases. Between 4000 and 8000 \AA, the normalized RMS remains below 0.2 across all phases, indicating that the model is able to capture the flux to within 20\%. There are a few regions of the spectrum that have larger relative dispersions in the flux residuals -- these each correspond to well-known spectral features like the \ion{Ca}{2} H\&K doublet, the \ion{Si}{2} 6355~\AA\ line, the O triplet, and the \ion{Ca}{2} IR triplet. These features are also identified in \citetalias{boone_twins_2020a} as regions of higher variability near maximum brightness, which may contribute to this wider spread. Away from these regions, the spread of the residuals is at the 5-10\% level.
+We also examined the performance of this model over the full test set more quantitatively. For each spectrum of the supernovae in the test set, we calculated the flux residuals: the difference between the observed and predicted values. In Figure \ref{fig:e2s_wavelength_resids} we show the RMS of these residuals as a function of wavelength bin, normalized by the average flux in each wavelength bin marginalized over all observed phases. Between 4000 and 8000 \AA, the normalized RMS remains below 0.2 across all phases, indicating that the model is able to capture the flux to within 20\%. There are a few regions of the spectrum that have larger relative dispersions in the flux residuals -- these each correspond to well-known spectral features like the \ion{Ca}{ii} H\&K doublet, the \ion{Si}{ii} 6355~\AA\ line, the O triplet, and the \ion{Ca}{ii} IR triplet. These features are also identified in \citetalias{boone_twins_2020a} as regions of higher variability near maximum brightness, which may contribute to this wider spread. Away from these regions, the spread of the residuals is at the 5-10\% level.
 
 \begin{figure}
     \centering
@@ -327,7 +327,7 @@ In addition to quantifying the model accuracy as a function of wavelength, we me
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{figures/nn_twins/embed2spec_rms_phase.pdf}
-    \caption{RMS of the flux residuals normalized by the average flux over all wavelengths at each phase. Most of the outlying points belong to either SN2009hs, a 91bg-like peculiar supernova, or LSQ12fhs, an 02cx-like peculiar supernova. Some outliers}
+    \caption{RMS of the flux residuals normalized by the average flux over all wavelengths at each phase. Most of the outlying points belong to either SN2009hs, a 91bg-like peculiar supernova, or LSQ12fhs, an 02cx-like peculiar supernova.}
     \label{fig:e2s_phase_resids}
 \end{figure}
 
