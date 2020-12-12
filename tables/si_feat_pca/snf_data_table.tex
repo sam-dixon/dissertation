@@ -1,9 +1,20 @@
-\begin{table*}
-\centering
-\begin{tabular}{ccccc}
+\begin{longtable}{ccccc}
+\caption{The baseline spectral feature data used throughout this analysis for both the training Nearby Supernova Factory data and the validation BSNIP sample.} \label{snf_data_table}\\
 \toprule
 Name & $v_{Si}$ (km/s) & $\Delta$ $v_{Si}$ (km/s) & pEW (\AA) & $\Delta$ pEW (\AA) \\
 \midrule
+\endfirsthead
+\multicolumn{4}{c}{Continued}\\
+\toprule
+Name & $v_{Si}$ (km/s) & $\Delta$ $v_{Si}$ (km/s) & pEW (\AA) & $\Delta$ pEW (\AA) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{c}{Table continues}\\
+\midrule
+\endfoot
+\bottomrule
+\endlastfoot
 SNF20060911-014 & 11301 & 266 & 78.6 & 6.1 \\
 PTF11bnx & 10225 & 591 & 125.2 & 5.5 \\
 PTF09dnl & 12300 & 50 & 92.5 & 2.2 \\
@@ -15,7 +26,6 @@ SNF20070817-003 & 10875 & 839 & 134.9 & 5.9 \\
 SNNGC4424 & 10424 & 57 & 73.2 & 1.2 \\
 PTF10qyz & 11054 & 397 & 155.5 & 4.9 \\
 LSQ12fxd & 11043 & 331 & 80.5 & 2.5 \\
-\bottomrule
 % SNF20080821-000 & 11409 & 296 & 99.5 & 8.0 \\
 % SN2010dt & 10667 & 391 & 124.8 & 3.3 \\
 % SNF20080623-001 & 11085 & 236 & 110.1 & 4.6 \\
@@ -168,7 +178,4 @@ LSQ12fxd & 11043 & 331 & 80.5 & 2.5 \\
 % SNF20070712-003 & 9892 & 608 & 110.6 & 5.5 \\
 % SNF20080913-031 & 10075 & 728 & 93.9 & 7.8 \\
 % SNF20080510-001 & 11347 & 438 & 133.5 & 6.3 \\
-\end{tabular}
-\caption{The baseline spectral feature data used throughout this analysis for both the training Nearby Supernova Factory data and the validation BSNIP sample. The first few lines of the table are shown here. The full machine-readable data table is available online.}
-\label{snf_data_table}
-\end{table*}
+\end{longtable}

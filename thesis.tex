@@ -16,6 +16,7 @@
 \usepackage{multirow}
 \usepackage{aas_macros}
 \usepackage{rotating}
+\usepackage{longtable}
 % \usepackage[natbib=true, backend=bibtex, style=authoryear]{biblatex}
 % \bibliography{references}
 
@@ -24,14 +25,13 @@
 \newcommand{\stoe}{\texttt{spec2embed}}
 \newcommand{\etos}{\texttt{embed2spec}}
 \newcommand\ion[2]{#1$\;${\scshape{#2}}}
-\newcommand{\siliconii}{\ion{Si}{ii}\texorpdfstring{$\lambda$}{}6355}
-\newcommand{\CaIIHK}{\ion{Ca}{ii}H\&K}
-\newcommand{\SiIIred}{\ion{Si}{ii}$\lambda$6355}
-\newcommand{\SiIIblue}{\ion{Si}{ii}$\lambda$5972}
+\newcommand{\siliconii}{\ion{Si}{II} \texorpdfstring{$\lambda$}{}6355}
+\newcommand{\CaIIHK}{\ion{Ca}{II} H\&K}
+\newcommand{\SiIIred}{\ion{Si}{II} $\lambda$6355}
+\newcommand{\SiIIblue}{\ion{Si}{II} $\lambda$5972}
 \newcommand{\sn}{SN~Ia}
 \newcommand{\sne}{SNe~Ia}
 \newcommand{\snf}{SNfactory}
-\newcommand{\arcsec}[1]{$#1^{\prime\prime}$}
 
 \defcitealias{boone_twins_2020a}{B20a}
 \defcitealias{boone_twins_2020b}{B20b}
@@ -102,22 +102,6 @@ Professor Fernando P\'{e}rez}
 \clearpage
 \listoftables
 
-% \begin{acknowledgements}
-% Writing this dissertation would not have been possible without the advice, encouragement, and kindness of my advisors, colleagues, family, and friends.
-
-% I first want to thank my advisor, Saul Perlmutter, for being such an enthusiastic and supportive mentor. 
-
-% My qualification exam and dissertation committee members, Bill Holzapfel, Dan Kasen, and Fernando P\'{e}rez gave me a lot of useful feedback and advice that guided my work and bettered this document.
-
-% Paolo Privitera and Al Kogut 
-
-% Members of the Supernova Cosmology
-
-% Jeffrey Epstein and Jennet Dickinson have been my greatest friends since the first day of classes. It may sound dramatic 
-
-% Finally, I could not have finished writing all this up without the tireless support of Michael Mangus; thank you for always reminding me how capable I am.
-% \end{acknowledgements}
-
 \end{frontmatter}
 
 \pagestyle{headings}
@@ -134,6 +118,7 @@ Professor Fernando P\'{e}rez}
 
 \appendix
 \include{appendix_si_feat_pca}
+\include{appendix_si_measurements}
 \include{appendix_kde}
 \include{appendix_spec_feat}
 \include{appendix_reg_bias}
