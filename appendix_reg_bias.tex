@@ -1,0 +1,142 @@
+\chapter{Regression Bias Derivations}
+\section{Derivation of Regression Parameters in the Simultaneous Case}
+\label{app:simultaneous_ols}
+In ordinary least-squares regression, our goal is to minimize the loss function $L$ defined by the square of the residuals between the $y$ values predicted by our model ($\hat{\bm{Y}}\equiv\hat{\beta}_1\bm{x}_1 +\hat{\beta}_2\bm{x}_2\equiv\bm{X\hat{\beta}}$) and the data. 
+\begin{align*}
+    L &= ||\hat{\bm{Y}}-\bm{Y}||^2\\
+    &= (\bm{X\hat{\beta}}-\bm{Y})^T(\bm{X\hat{\beta}}-\bm{Y})\\
+    &= \bm{\hat{\beta}}^T\bm{X}^T\bm{X\hat{\beta}}
+    - \bm{\hat{\beta}}^T\bm{X}^T\bm{Y}
+    - \bm{Y}^T\bm{X\hat{\beta}}
+    + \bm{Y}^T\bm{Y}
+\end{align*}
+We can minimize this by taking the gradient as a function of $\bm{\hat{\beta}}$ and setting it equal to zero.
+\begin{align*}
+    \frac{\partial L}{\partial\bm{\hat{\beta}}} &=
+    (\bm{X}^T\bm{X}\bm{\hat{\beta}})^T
+    + \bm{\hat{\beta}}^T\bm{X}^T\bm{X}
+    - (\bm{X}^T\bm{Y})^T
+    - \bm{Y}^T\bm{X}\\
+    &= 2\bm{\hat{\beta}}^T\bm{X}^T\bm{X} - 2\bm{Y}^T\bm{X}
+\end{align*}
+$$\frac{\partial L}{\partial\bm{\hat{\beta}}} = 0 \Rightarrow \bm{\hat{\beta}}=(\bm{X}^T\bm{X})^{-1}\bm{X}^T\bm{Y}$$
+Plugging in our definition of $\bm{Y}$, we get
+\begin{equation}
+    \bm{\hat{\beta}} = (\bm{X}^T\bm{X})^{-1}\bm{X}^T(\bm{X\beta} + \bm{\epsilon}_\text{int})
+\label{eqn:sim_beta_vec_app}
+\end{equation}
+Since, by definition, $\langle\bm{\epsilon}_\text{int}\rangle=0$, $\langle\bm{\hat{\beta}}\rangle = \beta$, we can show that the spread of the residuals ($\bm{r}=\bm{\hat{Y}}-\bm{Y}$) is simply $\sigint$:
+\begin{align*}
+    \text{var}(\bm{r}) &= \langle\bm{r}^2\rangle - \langle\bm{r}\rangle^2\\
+    &= \langle(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})^T\rangle - \langle(\bm{X\hat{\beta}}-\bm{X\beta}-\bm{\epsilon}_\text{int})\rangle^2\\
+    &= \langle\bm{\epsilon}_\text{int}\bm{\epsilon}_\text{int}^T\rangle - \langle\bm{\epsilon}_\text{int}\rangle^2\\
+    &= \text{var}(\bm{\epsilon}_\text{int}) = \sigint^2
+\end{align*}
+
+The variance on these regression coefficients can also be calculated. First, we calculate $\langle\bm{\hat{\beta}}^2\rangle$:
+\begin{align*}
+    \langle\bm{\hat{\beta}}^2\rangle &= \langle\bm{\hat{\beta}}\bm{\hat{\beta}}^T\rangle \\
+    &= \langle(\bm{X}^T\bm{X})^{-1}\bm{X}^T\bm{YY}^T\bm{X}(\bm{X}^T\bm{X})^{-1}\rangle \\
+    &= \langle(\bm{X}^T\bm{X})^{-1}\bm{X}^T(\bm{X\beta}+\bm{\epsilon}_\text{int})(\bm{\beta}^T\bm{X}^T+\bm{\epsilon}_\text{int})\bm{X}(\bm{X}^T\bm{X})^{-1}\rangle\\
+    &= \bm{\beta\beta}^T + \sigint^2(\bm{X}^T\bm{X})^{-1}
+\end{align*}
+Then, by using the definition $\langle\bm{\hat{\beta}}\rangle^2 = \bm{\beta\beta}^T$, we have$$\text{var}(\bm{\hat{\beta}})= \langle\bm{\hat{\beta}}^2\rangle-\langle\bm{\hat{\beta}}\rangle^2 = \sigint^2(\bm{X}^T\bm{X})^{-1}.$$
+Calculating the individual components of this variance matrix in our two-dimensional case gives
+\begin{equation}
+    \text{var}(\hat{\beta_1})=\frac{\sigint^2}{N\sigma_1^2\left(1-\rho^2\right)}\quad\text{and}\quad\text{var}(\hat{\beta_2})=\frac{\sigint^2}{N\sigma_2^2\left(1-\rho^2\right)}.
+    \label{eqn:var_betahat_simultaneous}
+\end{equation}
+
+
+\section{Derivation of Biases on Regression Parameters in the Non-Simultaneous Case}
+\label{app:non_simultaneous_ols}
+Here we derive the biases on the regression parameters that occur when we perform bivariate linear regression one covariate at a time. We assume without loss of generality that we fit $\bm{Y}$ as a function of $\bm{x}_1$, giving an estimate of the slope that we denote $\hat{\beta}_1^\prime$.
+
+We can modify Eqn. \ref{eqn:sim_beta_vec_app} to obtain the predicted value of this slope in the first fit:
+\begin{align*}
+    \langle\hat{\beta}_1^\prime\rangle &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{Y}\rangle\\
+    &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_1\beta_1 + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_2\beta_2 + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{\epsilon}\rangle\\
+    &= \beta_1 + \beta_2\langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_2\rangle\\
+    &= \beta_1 + \frac{\beta_2\rho\sigma_2}{\sigma_1}
+\end{align*}
+
+The residuals from this first regression are
+\begin{align*}
+    \bm{r}_1 &= \bm{Y}-\bm{\hat{Y}}_1 \\
+    &= \bm{x}_1\beta_1 + \bm{x}_2\beta_2 + \bm{\epsilon}_\text{int}-\bm{x}_1\hat{\beta}_1^\prime\\
+    &= \beta_2\bm{x}_2 - \frac{\beta_2\rho\sigma_2}{\sigma_1}\bm{x}_1 + \bm{\epsilon}_\text{int}
+\end{align*}
+We can go through a similar analysis to find the predicted secondary effect from fitting the residuals of the first regression $\bm{r}_1$ as a function of $\bm{x}_2$. This gives
+\begin{align*}
+    \langle\hat{\beta}_2^\prime\rangle &= \langle(\bm{x}_2^T\bm{x}_2)^{-1}\bm{x}_2^T\bm{r}_1\rangle\\
+    &= \langle(\bm{x}_2^T\bm{x}_2)^{-1}\bm{x}_2^T(\beta_2\bm{x}_2 - \frac{\beta_2\rho\sigma_2}{\sigma_1}\bm{x}_1 + \bm{\epsilon}_\text{int})\rangle\\
+    &= \beta_2 - \beta_2\rho^2
+\end{align*}
+
+Calculating the final residuals gives
+\begin{align*}
+    \bm{r}_2 &= \bm{r}_1 - \bm{\hat{r}}_1\\
+    &= \beta_2\bm{x}_2 - \frac{\beta_2\rho\sigma_2}{\sigma_1}\bm{x}_1 + \bm{\epsilon} - \hat{\beta}_2^\prime\bm{x}_2\\
+    &= - \frac{\beta_2\rho\sigma_2}{\sigma_1}\bm{x}_1 + \beta_2\rho^2\bm{x}_2 + \bm{\epsilon}_\text{int},
+\end{align*}
+and using the typical propagation of uncertainty formulae to find the variance of these residuals, we obtain
+\begin{align*}
+    \sigma_{\bm{r}_2}^2 &= \frac{\beta_2^2\rho^2\sigma_2^2}{\sigma_1^2}\sigma_1^2 + \beta_2^2\rho^4\sigma_2^2 - 2\frac{\beta_2^2\rho^3\sigma_2}{\sigma_1}\rho\sigma_1\sigma_2 + \sigint^2\\
+    &= \beta_2^2\rho^2\sigma_2^2\left(1-\rho^2\right) + \sigint^2.
+\end{align*}
+
+\section{Step Function Correction Derivations}
+\label{app:step_func}
+Again, we start with Eqn. \ref{eqn:sim_beta_vec_app} to obtain the expected value of the best-fit slope from the linear portion of the fit.
+\begin{align*}
+    \langle\hat{\alpha}^\prime\rangle &= \langle \bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{Y}\rangle \\
+    &= \langle(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{x}_1\alpha + (\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\sgn(\bm{x}_2)\frac{\gamma}{2}+(\bm{x}_1^T\bm{x}_1)^{-1}\bm{x}_1^T\bm{\epsilon}_\text{int}\rangle\\
+    &= \alpha + \frac{\gamma}{2\sigma_1^2}\langle\bm{x}_1^T\sgn(\bm{x}_2)\rangle \\
+    &= \alpha + \frac{\gamma\rho}{\sigma_1\sqrt{2\pi}}
+\end{align*}
+The proof of the final step is as follows:
+\begin{align}
+\label{eqn:exp_val_abs_val}
+    \langle \bm{x}_1\sgn(\bm{x}_2)\rangle &= \displaystyle\int_{-\infty}^\infty \displaystyle\int_{-\infty}^\infty x_1\sgn(x_2)p(x_1, x_2)dx_1dx_2\nonumber\\
+    &= \displaystyle\int_{-\infty}^0 \displaystyle\int_{-\infty}^\infty -x_1 p(x_1, x_2)dx_1dx_2+
+    \displaystyle\int_{0}^\infty \displaystyle\int_{-\infty}^\infty x_1 p(x_1, x_2)dx_1dx_2\nonumber\\
+    &= 2 \displaystyle\int_{0}^\infty \displaystyle\int_{-\infty}^\infty x_1 p(x_1, x_2)dx_1dx_2\nonumber\\
+    &= \frac{1}{\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\displaystyle\int_{0}^\infty \displaystyle\int_{-\infty}^\infty x_1 \exp\left[-\frac{1}{2(1-\rho^2)}\left(\frac{x_1^2}{\sigma_1^2}+\frac{x_2^2}{\sigma_2^2}-\frac{2\rho x_1 x_2}{\sigma_1\sigma_2}\right)\right]dx_1dx_2\nonumber\\
+    &= \sqrt\frac{2}{\pi}\rho\sigma_1
+\end{align}
+
+The residuals that remain after correcting for the linear slope are
+\begin{align*}
+    \bm{r}_\alpha &= \bm{Y} - \bm{\hat{Y}}_\alpha\\
+    &= \alpha\bm{x}_1 + \frac{\gamma}{2}\sgn(\bm{x}_2) +\bm{\epsilon}_\text{int} - \hat{\alpha}^\prime\bm{x}_1\\
+    &= \frac{\gamma}{2}\sgn(\bm{x}_2) - \frac{\gamma\rho}{\sigma_1\sqrt{2\pi}}\bm{x}_1 + \bm{\epsilon}_\text{int}
+\end{align*}
+We can find what the step size $\gamma$ would be when fit to these residuals by finding the value of $\hat{\gamma}^\prime$ that minimizes $L=\left\|\bm{r}_\alpha - \frac{\hat{\gamma}^\prime}{2}\sgn(\bm{x}_2)\right\|^2$.
+\begin{align*}
+    L &= \left\|\bm{r}_\alpha - \frac{\hat{\gamma}^\prime}{2}\sgn(\bm{x}_2)\right\|^2\\
+    &= \bm{r}_\alpha^2 - \hat{\gamma}^\prime\bm{r}_\alpha\sgn(\bm{x}_2) + \frac{\hat{\gamma}^{\prime 2}}{4}\\
+    \frac{\partial L}{\partial \hat{\gamma}^\prime} &= -\bm{r}_\alpha\sgn(\bm{x}_2) + \frac{\hat{\gamma}^\prime}{2}
+\end{align*}
+Setting this derivative to zero, we find
+\begin{align*}
+    \hat{\gamma}^\prime &= 2\bm{r}_\alpha\sgn(\bm{x}_2)\\
+    &= \gamma - \frac{2\gamma\rho}{\sigma_1\sqrt{2\pi}}\bm{x}_1\sgn(\bm{x}_2) + 2\bm{\epsilon}_\text{int}\sgn(\bm{x}_2)
+\end{align*}
+The expectation value is
+\begin{align*}
+    \langle\hat{\gamma}^\prime\rangle &= \gamma - \frac{2\gamma\rho}{\sigma_1\sqrt{2\pi}}\langle\bm{x}_1\sgn(\bm{x}_2)\rangle + 2\langle\bm{\epsilon}_\text{int}\sgn(\bm{x}_2)\rangle\\
+    &= \gamma - \frac{2\gamma\rho^2}{\pi}
+\end{align*}
+where we used the result of Eqn. \ref{eqn:exp_val_abs_val} to evaluate $\langle\bm{x}_1\sgn(\bm{x}_2)\rangle$. Our final residuals after the two-step regression are then
+\begin{align*}
+    \bm{r}_\beta &= \bm{r}_\alpha - \bm{\hat{r}}_\alpha \\
+    &= \frac{\gamma}{2}\sgn(\bm{x}_2) - \frac{\gamma\rho}{\sigma_1\sqrt{2\pi}}\bm{x}_1 + \bm{\epsilon}_\text{int} - \frac{\gamma}{2}\sgn(\bm{x}_2) + \frac{\gamma\rho^2}{\pi}\sgn(\bm{x}_2)\\
+    &= -\frac{\gamma\rho}{\sigma_1\sqrt{2\pi}}\bm{x}_1+\frac{\gamma\rho^2}{\pi}\sgn(\bm{x}_2)+\bm{\epsilon}_\text{int}
+\end{align*}
+The variance of these residuals is
+\begin{align*}
+    \sigma_{\bm{r}_\beta}^2 &= \frac{\gamma^2\rho^2}{2\pi\sigma_1^2}\sigma_1^2 + \frac{\gamma^2\rho^4}{\pi^2} - \frac{2\gamma^2\rho^3}{\sigma_1\sqrt{2\pi^3}}\langle\bm{x}_1\sgn(\bm{x}_2)\rangle + \sigint^2\\
+    &= \frac{\gamma^2\rho^2}{2\pi} + \frac{\gamma^2\rho^4}{\pi^2} - \frac{2\gamma^2\rho^4}{\pi^2} + \sigint^2\\
+    &= \frac{\gamma^2\rho^2}{2\pi}\left(1-\frac{2\rho^2}{\pi}\right) + \sigint^2
+\end{align*}
+

@@ -1,0 +1,26 @@
+\chapter{Measuring Spectral Features}
+\label{app:spec_feat}
+To measure spectral features from real data (with associated flux noise), we first smooth the spectrum by convolving the observed flux $f(\lambda)$ with a Gaussian window weighted by the inverse of the flux variance, as is done in \cite{blondin_using_2006}, to get a smoothed spectrum $f_s(\lambda)$. Simulated spectra have no noise, so we do not smooth them. We do however interpolate both the smoothed, observed data and the simulated spectra onto a wavelength grid with 0.1 \AA\ resolution so that our identification of local extrema is not limited by the data resolution. For each feature region, we define a pseudo-continuum by identifying the local maxima $\lambda_{b}$ and $\lambda_{r}$ in the wavelength ranges blueward and redward of each feature described in Table~\ref{tab:spec_feat_info} and calculating the line that connects these two points. We divide the flux by that line to obtain the pseudo-continuum-removed local feature spectrum $f_c(\lambda)$. The velocity of each line is determined by finding the wavelength of the minimum of the pseudo-continuum-removed local feature spectrum ($\lambda_\text{min}$) and using this value in the relativistic Doppler formula along with the rest-frame minimum wavelength $\lambda_0$ listed for each feature in Table~\ref{tab:spec_feat_info}:
+\begin{equation}
+    \frac{v}{c} = \frac{\left(\lambda_\text{min}/\lambda_0\right)^2-1}{\left(\lambda_\text{min}/\lambda_0\right)^2+1}
+    \label{eqn:rel_doppler}
+\end{equation}
+The pseudo-equivalent width is calculated by integrating
+\begin{equation}
+    \text{pEW} = \displaystyle\int_{\lambda_b}^{\lambda_r} \left[1-\frac{f_s(\lambda)}{f_c(\lambda)}\right] d\lambda
+    \label{eqn:pew}
+\end{equation}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{cccc}\toprule
+    Feature name & $\lambda_b$ range (\AA) & $\lambda_r$ range (\AA) & $\lambda_0$ (\AA)\\\midrule
+    \CaIIHK{} & 3504 - 3687 & 3887 - 3990 & 3945\\
+    \SiIIblue & 5550 - 5681 & 5850 - 6015 & 5972\\
+    \SiIIred & 5850 - 6015 & 6250 - 6365 & 6355\\\bottomrule
+    \end{tabular}
+    \caption{Extrema limits and rest-frame minimum wavelengths for the spectral indicators studied.}
+    \label{tab:spec_feat_info}
+\end{table}
+
+\verb|spectral_lines|\footnote{\url{https://github.com/sam-dixon/spectral_lines}} is a package for measuring these spectral features using this inverse-variance weighted Gaussian smoothing, the Savitsky-Golay smoothing technique used for the spectral feature measurements in Chapter \ref{chap:si_feat_pca}, and a simple Gaussian model of each absorption feature.
