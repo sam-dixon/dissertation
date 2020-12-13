@@ -36,7 +36,7 @@ where $e_0(\lambda, p)$ is the average spectral sequence, and each of the $e_i(\
 
 \section{Data}
 \label{sec:data}
-In order to generate new spectral time-series data from this model, we first need measurements of the spectral model parameters from a representative data set. The representative data set we are using throughout this analysis is the spectral time-series data from the Nearby Supernova Factory \citep[SNfactory;][]{aldering_overview_2002}. SNfactory has collected spectrophotometry from over 400 SNe~Ia. Of these, 228 are considered high quality enough for light curve fitting, and have light curve parameters within the typical ranges used in cosmology analyses. With each spectral model (SALT2 and each SNEMO model), we obtain a vector of model parameters for each supernova by minimizing
+In order to generate new spectral time-series data from this model, we first need measurements of the spectral model parameters from a representative data set. The representative data set we are using throughout this analysis is the spectral time-series data from the Nearby Supernova Factory \citep[SNfactory;][]{aldering_overview_2002}. SNfactory has collected spectrophotometry from over 400 SNe~Ia. Of these, 228 are considered high quality enough for light curve fitting, and have light curve parameters within the typical ranges used in cosmology analyses.\footnote{This analysis is based on the \texttt{CASCADE} production of the SNfactory pipeline.} With each spectral model (SALT2 and each SNEMO model), we obtain a vector of model parameters for each supernova by minimizing
 \begin{equation}
     \chi^2 = \displaystyle\sum_{\lambda, p} f_\text{obs}(\lambda, p) - f_\text{mod}(\lambda, p\;|\; \Theta)
 \end{equation}
