@@ -1,7 +1,7 @@
 \chapter{Regression Bias Derivations}
 \section{Derivation of Regression Parameters in the Simultaneous Case}
 \label{app:simultaneous_ols}
-In ordinary least-squares regression, our goal is to minimize the loss function, $L$, defined by the square of the residuals between the $y$ values predicted by our model ($\hat{\bm{Y}}\equiv\hat{\beta}_1\bm{x}_1 +\hat{\beta}_2\bm{x}_2\equiv\bm{X\hat{\beta}}$) and the data. This is equivalent to maximizing the likelihood assuming the residuals are Gaussian.
+In ordinary least-squares regression, our goal is to minimize the loss function, $L$, defined by the square of the residuals between the $y$ values predicted by our model ($\hat{\bm{Y}}\equiv\hat{\beta}_1\bm{x}_1 +\hat{\beta}_2\bm{x}_2\equiv\bm{X\hat{\beta}}$) and the data. This is equivalent to maximizing the likelihood, assuming the residuals are Gaussian.
 \begin{align*}
     L &= ||\hat{\bm{Y}}-\bm{Y}||^2\\
     &= (\bm{X\hat{\beta}}-\bm{Y})^T(\bm{X\hat{\beta}}-\bm{Y})\\
